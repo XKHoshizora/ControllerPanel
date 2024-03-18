@@ -1,0 +1,34 @@
+#:kivy 2.0.0
+
+<ControlBar>:
+    ActionBar:
+        pos_hint: {'top':1}
+
+        ActionView:
+            use_separator: True
+
+            ActionPrevious:
+                title: 'Example App'
+                with_previous: False
+
+            ActionButton:
+                text: 'File'
+
+            ActionButton:
+                text: 'Edit'
+
+            ActionGroup:
+                text: 'Tools'
+                mode: 'spinner'
+
+                ActionButton:
+                    text: 'Tool1'
+
+                ActionButton:
+                    text: 'Tool2'
+
+                ActionButton:
+                    text: 'Tool3'
+
+                ActionButton:
+                    text: 'Tool4'

@@ -1,0 +1,271 @@
+#:kivy 2.0.0
+
+<ShowScreen>:
+    Image:
+        source: 'data/Background/000000.png'
+        size: (1024, 600)
+        allow_stretch: True
+        border: [0, 0, 0, 1]
+
+<ShowWidgets>:
+    # 竖向排列
+    orientation: 'vertical'
+
+    # 顶部工具栏
+    ActionBar:
+        pos_hint: {'top': 1}
+        border: [0, 0, 0, 0]
+
+        ActionView:
+            # 在 ActionGroup 前插入分隔符
+            use_separator: True
+
+            ActionPrevious:
+                title: 'Controller Panel'
+                app_icon: 'data/Icons/dash_board.png'
+                with_previous: False
+
+            ActionGroup:
+                mode: 'spinner'
+                text: 'Options'
+                font_size: '20px'
+
+                ActionButton:
+                    text: 'Language'
+                    font_size: '20px'
+                    on_press: print('语言设置')
+
+                ActionButton:
+                    text: 'Shut Down'
+                    font_size: '20px'
+                    on_press: print('关机')
+
+    # 数据显示
+    BoxLayout:
+        # 左端留白
+        Image:
+            source: 'data/Background/000000.png'
+            size_hint_x: .05
+
+        # 数据
+        BoxLayout:
+            orientation: 'vertical'
+
+            Label:
+                id: dataview
+                text: 'Dashboard'
+                font_size: '30sp'
+                size_hint_x: None
+                size: self.texture_size
+                pos_hint: {'center_x': .5, 'center_y': .5}
+
+            GridLayout:
+                rows: 2
+                cols: 3
+
+                BoxLayout:
+                    Label:
+                        text: 'Assist Rate: '
+                        font_size: '25sp'
+                        size_hint_x: None
+                        size: self.texture_size
+                        pos_hint: {'right': 1, 'center_y': .5}
+                    Label:
+                        id: ar_data
+                        text: '{}%'.format(int(assist2.value))
+                        font_size: '25sp'
+                        size_hint_x: None
+                        size: self.texture_size
+                        pos_hint: {'x': 0, 'center_y': .5}
+
+                BoxLayout:
+                    Label:
+                        text: 'Table Height: '
+                        font_size: '25sp'
+                        size_hint_x: None
+                        size: self.texture_size
+                        pos_hint: {'right': 1, 'center_y': .5}
+                    Label:
+                        id: th_data
+                        text: '45 cm'
+                        font_size: '25sp'
+                        size_hint_x: None
+                        size: self.texture_size
+                        pos_hint: {'x': 0, 'center_y': .5}
+
+                Label:
+                    id: data3
+                    text: 'data3'
+
+                Label:
+                    id: data4
+                    text: 'data4'
+
+                Label:
+                    id: data5
+                    text: 'data5'
+
+                Label:
+                    id: data6
+                    text: 'data6'
+
+
+
+        # 右端留白
+        Image:
+            source: 'data/Background/000000.png'
+            size_hint_x: .05
+
+    # 中间分隔
+    Image:
+        source: 'data/Background/000000.png'
+        size_hint_y: .05
+
+    # 协助率和升降台
+    BoxLayout:
+        orientation: 'horizontal'
+
+        # 左端留白
+        Image:
+            source: 'data/Background/000000.png'
+            size_hint_x: .1
+
+        # 协助率
+        BoxLayout:
+            size_hint_y: None
+            pos_hint: {'center_y': .5}
+
+            Label:
+                id: assist1
+                text: 'アシスト率'
+                font_size: '25sp'
+                size_hint_x: None
+                size: self.texture_size
+                pos_hint: {'right': 1, 'center_y': .5}
+
+
+            Slider:
+                # 组件ID
+                id: assist2
+                # 组件坐标
+                pos_hint: {'center_x': .5, 'center_y': .5}
+
+                # 设置滑块的方向，默认为horizontal，水平方向
+                orientation: 'horizontal'
+
+                # 设置取值范围
+                range: (0, 100)
+                # 步长设置
+                step: 1
+                # 是否显示轨迹
+                value_track: True
+                # 通过设置 value 属性来设置滑块的初始值
+                value: 50
+                # 反应范围：仅游标被触碰时
+                sensitivity: 'handle'
+
+                # 轨迹颜色 [R/255, G/255, B/255, A/100]
+                value_track_color: [.27, .43, 1, 1]
+                # 轨道图片
+                # background_horizontal: 'data/Icons/slider_bg.png'
+                # 轨道边框
+                border_horizontal: [0, 0, 0, 0]
+                # 游标
+                cursor_image: 'data/Icons/slider_cursor.png'
+                # 游标大小 (width, height)
+                cursor_size: (25, 25)
+                # 轨道宽度
+                background_width:30
+                # 轨迹宽度
+                value_track_width: 3
+
+                # 绑定事件
+                on_touch_down: root.slider_down(self)
+                # on_touch_move: root.slider_move(self)
+
+            Label:
+                id: assist3
+                text: '{}%'.format(int(assist2.value))
+                font_size: '25sp'
+                size_hint_x: None
+                pos_hint: {'center_x': 0, 'center_y': .5}
+
+        # 中间分隔
+        Image:
+            source: 'data/Background/000000.png'
+            size_hint_x: .05
+
+        # 升降台
+        BoxLayout:
+            orientation: 'vertical'
+
+            Button:
+                id:lift_up_button
+                size_hint: (None, None)
+                size: 128, 128
+                pos_hint: {'x': .4, 'top': 0}
+                background_color: [0, 0, 0, 0]
+                # 事件绑定
+                on_press: root.lift_up(self)
+                on_release: root.lift_up_release()
+
+                Image:
+                    id:lift_up_img
+                    source: 'data/Icons/up.png'
+                    size_hint: (None, None)
+                    y: self.parent.y
+                    x: self.parent.x
+                    size: self.parent.size
+                    stretch: True
+
+            Button:
+                id:lift_down_button
+                size_hint: (None, None)
+                size: 128, 128
+                pos_hint: {'x': .4, 'y': 0}
+                background_color: [0, 0, 0, 0]
+                # 事件绑定
+                on_press: root.lift_down()
+                on_release: root.lift_down_release()
+
+                Image:
+                    id:lift_down_img
+                    source: 'data/Icons/down.png'
+                    size_hint: (None, None)
+                    y: self.parent.y
+                    x: self.parent.x
+                    size: self.parent.size
+                    stretch: True
+
+            # 右端留白
+            Image:
+                source: 'data/Background/000000.png'
+                size_hint_x: .1
+
+    # 最底端留白
+    Image:
+        source: 'data/Background/000000.png'
+        size_hint_y: .1
+
+<MyClock>
+    size_hint: (.3, .2)
+    pos_hint: {'center_x': .5, 'top': 1}
+    anchor_x: 'center'
+    anchor_y: 'top'
+
+    ActionBar:
+        border: [0, 0, 0, 0]
+
+        ActionView:
+            ActionPrevious:
+                with_previous: False
+                app_icon: ''
+                app_icon_width: 0
+                app_icon_height: 0
+                size_hint_x: None
+                width: len(root.ids.time_tab.text)
+
+            ActionLabel:
+                id: time_tab
+                text: '2021-12-20 19:46:55'
+                font_size: '20px'
